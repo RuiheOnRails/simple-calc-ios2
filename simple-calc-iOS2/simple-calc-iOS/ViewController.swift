@@ -245,6 +245,9 @@ class ViewController: UIViewController {
             if(numbers[0] > 20){
                 reset()
             }else{
+                if (numbers[0] == 0){
+                    numbers[0] = 1;
+                }
                 var fact = 1
                 for i in 1...Int(numbers[0]){
                     fact *= i

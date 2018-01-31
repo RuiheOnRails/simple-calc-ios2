@@ -20,7 +20,7 @@ class HistoryViewController : UIViewController{
         displayHistory()
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -41,6 +41,7 @@ class HistoryViewController : UIViewController{
             for index in 0...history.count-1{
                 let label = UILabel(frame:CGRect(x: 50, y: index*25+50, width: 300, height: 40))
                 label.text = history[index]
+                scrollPane.contentSize = CGSize(width: 300, height: index*26 + 70)
                 scrollPane.addSubview(label)
             }
         }else{
