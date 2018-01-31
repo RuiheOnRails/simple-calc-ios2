@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var ioTextField: UITextField!
     
+    var history: [String] = []
     var combinedDisplay : String = "" {
         didSet{
             ioTextField.text = combinedDisplay
@@ -182,18 +183,21 @@ class ViewController: UIViewController {
         switch op{
         case "+":
             let sum = numbers[0] + numbers[1]
+            addToHistory(combinedDisplay + " = " + String(sum))
             combinedDisplay = String(sum)
             numberBuilder = String(sum)
             numbers = []
             op = ""
         case "-":
             let sub = numbers[0] - numbers[1]
+            addToHistory(combinedDisplay + " = " + String(sub))
             combinedDisplay = String(sub)
             numberBuilder = String(sub)
             numbers = []
             op = ""
         case "*":
             let times = numbers[0] * numbers[1]
+            addToHistory(combinedDisplay + " = " + String(times))
             combinedDisplay = String(times)
             numberBuilder = String(times)
             numbers = []
@@ -203,6 +207,7 @@ class ViewController: UIViewController {
                 warningDivModZero()
             }else{
                 let divide = numbers[0] / numbers[1]
+                addToHistory(combinedDisplay + " = " + String(divide))
                 combinedDisplay = String(divide)
                 numberBuilder = String(divide)
                 numbers = []
@@ -213,6 +218,7 @@ class ViewController: UIViewController {
                 warningDivModZero()
             }else{
                 let mod = Int(numbers[0]) % Int(numbers[1])
+                addToHistory(combinedDisplay + " = " + String(mod))
                 combinedDisplay = String(mod)
                 numberBuilder = String(mod)
                 numbers = []
@@ -220,6 +226,7 @@ class ViewController: UIViewController {
             }
         case "count":
             let count = numbers.count
+            addToHistory(combinedDisplay + " = " + String(count))
             reset()
             combinedDisplay = String(count)
             numberBuilder = String(count)
@@ -230,6 +237,7 @@ class ViewController: UIViewController {
                 sum += number
             })
             let avg:Double = sum/count
+            addToHistory(combinedDisplay + " = " + String(avg))
             reset()
             combinedDisplay = String(avg)
             numberBuilder = String(avg)
@@ -241,11 +249,21 @@ class ViewController: UIViewController {
                 for i in 1...Int(numbers[0]){
                     fact *= i
                 }
+                addToHistory(combinedDisplay + " = " + String(fact))
                 reset()
                 combinedDisplay = String(fact)
                 numberBuilder = String(fact)
             }
         default: reset()
         }
+    }
+    
+    func addToHistory(_ toAdd: String){
+        history.append(toAdd);
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination as! HistoryViewController
+        destination.history = history
     }
 }
